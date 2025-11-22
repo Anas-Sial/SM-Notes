@@ -14,7 +14,7 @@ const WrapperContainer: React.FC<WrapperContainerProps> = ({
             style={[styles.container, style]}
             {...safeAreaProps}
         >
-            <StatusBar barStyle="light-content" backgroundColor={commonColors.white} />
+            <StatusBar barStyle="light-content" backgroundColor={commonColors.bgColor} />
             {children}
         </SafeAreaView>
     )

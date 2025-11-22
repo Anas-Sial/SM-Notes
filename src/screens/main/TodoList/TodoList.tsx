@@ -222,7 +222,7 @@ const TodoList = () => {
                 ) : filteredAndSortedTodos?.length === 0 ? (
                     <EmptyComp title='No todos found matching your criteria' />
                 ) : (
-                    <View>
+                    // <View style={{ flexGrow: 1 }}>
                         <FlatList
                             data={filteredAndSortedTodos}
                             renderItem={renderTodoItem}
@@ -232,7 +232,7 @@ const TodoList = () => {
                             columnWrapperStyle={styles.columnWrapper}
                             showsVerticalScrollIndicator={false}
                         />
-                    </View>
+                    // </View>
                 )}
 
             </View>

@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: moderateScale(15),
+        paddingBottom: 0
     },
     header: {
         ...commonStyles.rowJustify,
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
         fontFamily: fontFamily.bold,
     },
     listContent: {
-        paddingBottom: moderateScale(80),
+        paddingBottom: moderateScale(20),
     },
     columnWrapper: {
         justifyContent: 'space-between',
