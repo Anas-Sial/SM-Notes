@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Alert } from 'react-native'
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { WrapperContainer, TextComp, Header, Scrollable, Pressable } from '@/components'
 import { MainStackParamList } from '@/navigation/types'
 import { SCREEN } from '@/navigation/screenNames'
-import { useDispatch } from '@/redux/hooks'
+import { useDispatch, useSelector } from '@/redux/hooks'
 import { toggleTodoComplete, deleteTodo } from '@/redux/reducers/todos'
 import { showSuccessToast } from '@/utils/toast'
 import commonStyles from '@/styles/commonStyles'
@@ -20,7 +20,12 @@ const TodoDetail = () => {
     const navigation = useNavigation<NavigationProp>()
     const route = useRoute<RouteProps>()
     const dispatch = useDispatch()
-    const { todo } = route?.params || {}
+    const { todo: routeTodo } = route?.params || {}
+
+    const todos = useSelector((state) => state.todos.todos)
+    const todo = useMemo(() => {
+        return todos.find((t) => t.id === routeTodo?.id) || routeTodo
+    }, [todos, routeTodo])
 
     const handleEdit = () => {
         navigation.navigate(SCREEN.ADD_EDIT_TODO, { mode: 'edit', todo })

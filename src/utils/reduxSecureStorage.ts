@@ -17,7 +17,12 @@ const reduxSecureStorage = {
     try {
       const value = await RNSecureStorage.getItem(key)
       return value
-    } catch (error) {
+    } catch (error: any) {
+      // Silently handle "does not exist" errors (normal on first app launch)
+      if (error?.message?.includes('does not exist')) {
+        return null
+      }
+      // Log other unexpected errors
       console.error('Error retrieving value from secure storage:', error)
       return null
     }
@@ -45,8 +50,16 @@ const reduxSecureStorage = {
   async multiGet(keys: string[]): Promise<[string, string | null][]> {
     try {
       const promises = keys.map(async (key) => {
-        const value = await RNSecureStorage.getItem(key)
-        return [key, value] as [string, string | null]
+        try {
+          const value = await RNSecureStorage.getItem(key)
+          return [key, value] as [string, string | null]
+        } catch (error: any) {
+          // Silently handle "does not exist" errors
+          if (error?.message?.includes('does not exist')) {
+            return [key, null] as [string, string | null]
+          }
+          throw error
+        }
       })
       return await Promise.all(promises)
     } catch (error) {
