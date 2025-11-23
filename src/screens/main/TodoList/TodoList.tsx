@@ -118,33 +118,24 @@ const TodoList = () => {
     }
 
     const handleTodoPress = (todo: Todo) => {
-        if (selectionMode) {
-            toggleSelection(todo.id)
-        } else {
-            navigation.navigate(SCREEN.TODO_DETAIL, { todo })
-        }
+        navigation.navigate(SCREEN.TODO_DETAIL, { todo })
     }
 
-    const handleTodoLongPress = (id: string) => {
-        if (!selectionMode) {
-            setSelectionMode(true)
-            setSelectedIds(new Set([id]))
-        }
-    }
-
-    const toggleSelection = (id: string) => {
-        setSelectedIds(prev => {
-            const newSet = new Set(prev)
-            if (newSet.has(id)) {
-                newSet.delete(id)
-            } else {
-                newSet.add(id)
-            }
-            if (newSet.size === 0) {
-                setSelectionMode(false)
-            }
-            return newSet
-        })
+    const handleTodoLongPress = (todo: Todo) => {
+        Alert.alert(
+            'Delete Todo',
+            `Are you sure you want to delete "${todo.name}"?`,
+            [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => {
+                        dispatch(deleteTodo(todo.id))
+                    },
+                },
+            ]
+        )
     }
 
     const handleCancelSelection = () => {
@@ -184,7 +175,7 @@ const TodoList = () => {
                 isSelected={isSelected}
                 selectionMode={selectionMode}
                 onPress={() => handleTodoPress(item)}
-                onLongPress={() => handleTodoLongPress(item.id)}
+                onLongPress={() => handleTodoLongPress(item)}
                 onToggleComplete={() => handleToggleComplete(item.id)}
             />
         )
@@ -223,15 +214,15 @@ const TodoList = () => {
                     <EmptyComp title='No todos found matching your criteria' />
                 ) : (
                     // <View style={{ flexGrow: 1 }}>
-                        <FlatList
-                            data={filteredAndSortedTodos}
-                            renderItem={renderTodoItem}
-                            keyExtractor={item => item.id}
-                            numColumns={2}
-                            contentContainerStyle={styles.listContent}
-                            columnWrapperStyle={styles.columnWrapper}
-                            showsVerticalScrollIndicator={false}
-                        />
+                    <FlatList
+                        data={filteredAndSortedTodos}
+                        renderItem={renderTodoItem}
+                        keyExtractor={item => item.id}
+                        numColumns={2}
+                        contentContainerStyle={styles.listContent}
+                        columnWrapperStyle={styles.columnWrapper}
+                        showsVerticalScrollIndicator={false}
+                    />
                     // </View>
                 )}
 
