@@ -1,6 +1,6 @@
 import { combineReducers, Action } from "redux"
 import { persistReducer } from "redux-persist"
-import reduxSecureStorage from "@/utils/reduxSecureStorage"
+import { reduxSecureStorage } from "@/utils/secureStorage"
 import auth, { AuthState } from "./auth"
 import todos from "./todos"
 

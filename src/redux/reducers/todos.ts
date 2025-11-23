@@ -40,13 +40,13 @@ const todosSlice = createSlice({
             }
         },
         deleteTodo: (state, action: PayloadAction<string>) => {
-            state.todos = state.todos.filter(todo => todo.id !== action.payload);
+            state.todos = state.todos.filter(todo => todo.id !== action.payload)
         },
         toggleTodoComplete: (state, action: PayloadAction<string>) => {
-            const todo = state.todos.find(todo => todo.id === action.payload);
+            const todo = state.todos.find(todo => todo.id === action.payload)
             if (todo) {
-                todo.completed = !todo.completed;
-                todo.updatedAt = new Date().toISOString();
+                todo.completed = !todo.completed
+                todo.updatedAt = new Date().toISOString()
             }
         },
         setLoading: (state, action: PayloadAction<boolean>) => {
@@ -72,6 +72,6 @@ export const {
     setLoading,
     setError,
     setTodos,
-} = todosSlice.actions;
+} = todosSlice.actions
 
 export default todosSlice.reducer;
